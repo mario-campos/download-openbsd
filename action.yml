@@ -1,0 +1,26 @@
+name: download-openbsd
+description: Download OpenBSD compilation files.
+inputs:
+  arch:
+    description: architecture
+    required: true
+  version:
+    description: version number (e.g. "7.0")
+    required: true
+outputs:
+  root:
+    description: The path to the root of the filesets.
+    value: ${{ steps[0].outputs.root }}
+runs:
+  using: composite
+  steps:
+  - name: Download OpenBSD Filesets
+    shell: bash
+    env:
+      V: ${{ inputs.version }}
+      ARCH: ${{ inputs.arch }}
+    run: |
+      OPENBSD_ROOT="$(mktemp --directory -p $RUNNER_TEMP)"
+      echo "::set-output name=root::$OPENBSD_ROOT"
+      curl --silent "https://cdn.openbsd.org/pub/OpenBSD/$V/$ARCH/comp${V/./}.tgz" | tar --extract --gunzip --verbose --directory "$OPENBSD_ROOT" ./usr/include
+      curl --silent "https://cdn.openbsd.org/pub/OpenBSD/$V/$ARCH/base${V/./}.tgz" | tar --extract --gunzip --verbose --directpry "$OPENBSD_ROOT" ./usr/share/mk
