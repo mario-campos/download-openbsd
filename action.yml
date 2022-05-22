@@ -10,12 +10,13 @@ inputs:
 outputs:
   root:
     description: The path to the root of the filesets.
-    value: ${{ steps[0].outputs.root }}
+    value: ${{ steps.download-filesets.outputs.root }}
 runs:
   using: composite
   steps:
   - name: Download OpenBSD Filesets
     shell: bash
+    id: download-filesets
     env:
       V: ${{ inputs.version }}
       ARCH: ${{ inputs.arch }}
