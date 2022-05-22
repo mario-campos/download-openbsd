@@ -23,4 +23,4 @@ runs:
       OPENBSD_ROOT="$(mktemp --directory -p $RUNNER_TEMP)"
       echo "::set-output name=root::$OPENBSD_ROOT"
       curl --silent "https://cdn.openbsd.org/pub/OpenBSD/$V/$ARCH/comp${V/./}.tgz" | tar --extract --gunzip --verbose --directory "$OPENBSD_ROOT" ./usr/include
-      curl --silent "https://cdn.openbsd.org/pub/OpenBSD/$V/$ARCH/base${V/./}.tgz" | tar --extract --gunzip --verbose --directpry "$OPENBSD_ROOT" ./usr/share/mk
+      curl --silent "https://cdn.openbsd.org/pub/OpenBSD/$V/$ARCH/base${V/./}.tgz" | tar --extract --gunzip --verbose --directory "$OPENBSD_ROOT" ./usr/share/mk
